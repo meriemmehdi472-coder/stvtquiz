@@ -1,12 +1,12 @@
 import { useState, useMemo } from 'react';
-
 import CryptoJS from "crypto-js";
 
-// Même clé que dans App.jsx
 const SECRET_KEY = "mon-secret-ultra-love-💖";
 
 function decryptData(cipherText) {
   try {
+    // Si ce n'est pas une chaîne (ex: au premier rendu), on retourne un tableau vide
+    if (typeof cipherText !== 'string') return cipherText; 
     const bytes = CryptoJS.AES.decrypt(cipherText, SECRET_KEY);
     return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
   } catch (err) {
@@ -14,6 +14,7 @@ function decryptData(cipherText) {
     return [];
   }
 }
+
 export const Slider = ({ userAnswers = [] }) => {
   const [loveLevel, setLoveLevel] = useState(50);
   const [btnPos, setBtnPos] = useState({ x: 0, y: 0 });
@@ -24,12 +25,14 @@ export const Slider = ({ userAnswers = [] }) => {
   const myPhoneNumber = "33783746423"; 
   const forbiddenWords = ["rien", "pas besoin", "tu me suffit", "pas nécessaire", "suffit"];
 
-  // 1. MISE EN FORME DES RÉSULTATS (Inclut succès et erreurs)
+  // 1. DÉCRYPTAGE ET MISE EN FORME
   const formattedAnswers = useMemo(() => {
-    if (!userAnswers || userAnswers.length === 0) return "_Aucune donnée enregistrée_";
+    // On décode les réponses reçues de App.jsx
+    const realAnswers = decryptData(userAnswers);
     
-    // On affiche chaque ligne (qui contiendra maintenant le texte de l'erreur si besoin)
-    return userAnswers
+    if (!realAnswers || realAnswers.length === 0) return "_Données protégées par l'amour_";
+    
+    return realAnswers
       .map((entry, index) => `📍 *Q${index + 1}* : ${entry}`)
       .join('%0A'); 
   }, [userAnswers]);
@@ -46,7 +49,8 @@ export const Slider = ({ userAnswers = [] }) => {
     
     const quizSection = `*📊 ANALYSE DU QUIZ :*%0A${formattedAnswers}`;
     
-    const recapSection = `*❤️ TAUX D'AMOUR :* 100% (Bloqué au max)%0A` +
+    // On ajoute le loveLevel dynamique choisi par l'utilisateur
+    const recapSection = `*❤️ TAUX D'AMOUR :* ${loveLevel}% (Confirmé)%0A` +
                         `*🎁 CADEAU CHOISI :* ${chosenGift}`;
     
     const wishSection = `*💌 SOUHAIT SPÉCIAL :*%0A"${finalWish}"`;
@@ -121,7 +125,7 @@ export const Slider = ({ userAnswers = [] }) => {
             <button 
               onMouseEnter={escapeButton}
               style={{ transform: `translate(${btnPos.x}px, ${btnPos.y}px)` }}
-              className="bg-gray-100 text-gray-400 px-6 py-2 rounded-xl absolute opacity-50 text-xs font-bold pointer-events-auto transition-transform duration-200"
+              className="bg-gray-500 text-gray-700 px-6 py-2 rounded-xl absolute opacity-50 text-xs font-bold pointer-events-auto transition-transform duration-200"
             >
               Un vieux caillou 🪨
             </button>
@@ -156,6 +160,18 @@ export const Slider = ({ userAnswers = [] }) => {
           </div>
         </div>
       )}
+      <div className="mt-8 flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity duration-500">
+        <div className="flex items-center gap-2 text-rose-500">
+          <span className="animate-pulse">✨</span>
+          <p className="text-[10px] font-bold uppercase tracking-[0.3em]">
+            Fait avec tout mon amour
+          </p>
+          <span className="animate-pulse">✨</span>
+        </div>
+        <p className="text-[9px] text-gray-700 font-medium italic">
+          Rien que pour mon Lapinouuu 🌹
+        </p>
+      </div>
     </div>
   ); 
 };

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Quiz } from './Components/Quiz'
 import { Slider } from './Components/Slider'
+import { Sparkles } from './Components/Sparkles'
 import CryptoJS from 'crypto-js'
 
 const SECRET_KEY = "mon-secret-ultra-love-💖";
@@ -48,6 +49,7 @@ function App() {
   return (
     <main className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-rose-50 via-pink-100 to-red-100 px-6">
       <HeartsBackground />
+      <Sparkles/>
 
       <div className="relative z-10 w-full flex justify-center">
 
@@ -131,6 +133,7 @@ function App() {
           </div>
         )}
       </div>
+      
     </main>
   )
 }
