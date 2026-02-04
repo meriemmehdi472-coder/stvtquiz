@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 const QUESTIONS = [
+  // ... (tes questions restent identiques)
   { 
     id: 1, 
     text: "Quel est notre lieu de rencontre ?", 
@@ -71,23 +72,30 @@ const QUESTIONS = [
 
 export const Quiz = ({ onWin, onLose }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  // AJOUT : On crée un état pour stocker les réponses saisies
   const [userAnswers, setUserAnswers] = useState([]);
+  const [attempts, setAttempts] = useState(0);
 
-  const handleAnswer = (answer) => {
-    if (answer === QUESTIONS[currentQuestion].correct) {
-      // On prépare le nouveau tableau de réponses
-      const newAnswers = [...userAnswers, answer];
+  const handleAnswer = (option) => {
+    const isCorrect = option === QUESTIONS[currentQuestion].correct;
+    
+    if (isCorrect) {
+      // Correction ici : QUESTIONS avec un seul N
+      const status = attempts === 0 ? "Parfait !" : `⚠️ (Réussi après ${attempts} erreur(s))`;
+      const answerEntry = `${QUESTIONS[currentQuestion].text} - Ta réponse : "${option}" ${status}`;
       
+      const newAnswers = [...userAnswers, answerEntry];
+
       if (currentQuestion + 1 < QUESTIONS.length) {
         setUserAnswers(newAnswers);
         setCurrentQuestion(currentQuestion + 1);
+        setAttempts(0);
       } else {
-        // TRÈS IMPORTANT : On envoie le tableau complet à onWin
-        onWin(newAnswers); 
+        // On envoie le tableau complet à App.jsx
+        onWin(newAnswers);
       }
     } else {
-      onLose(); 
+      setAttempts(prev => prev + 1);
+      alert("Oups ! Ce n'est pas ça... Réessaie ! 😉"); 
     }
   };
 

@@ -10,12 +10,13 @@ export const Slider = ({ userAnswers = [] }) => {
   const myPhoneNumber = "33783746423"; 
   const forbiddenWords = ["rien", "pas besoin", "tu me suffit", "pas nécessaire", "suffit"];
 
-  // 1. FORMATEUR DE RÉPONSES (Évite le "Aucune donnée enregistrée")
+  // 1. MISE EN FORME DES RÉSULTATS (Inclut succès et erreurs)
   const formattedAnswers = useMemo(() => {
-    if (!userAnswers || userAnswers.length === 0) return "_Données en cours de traitement..._";
+    if (!userAnswers || userAnswers.length === 0) return "_Aucune donnée enregistrée_";
     
+    // On affiche chaque ligne (qui contiendra maintenant le texte de l'erreur si besoin)
     return userAnswers
-      .map((ans, index) => `📍 *Question ${index + 1}* : _${ans}_`)
+      .map((entry, index) => `📍 *Q${index + 1}* : ${entry}`)
       .join('%0A'); 
   }, [userAnswers]);
 
@@ -25,21 +26,19 @@ export const Slider = ({ userAnswers = [] }) => {
     setBtnPos({ x, y });
   };
 
-  // 2. STRUCTURE WHATSAPP HAUT DE GAMME
   const handleSendWhatsApp = (finalWish) => {
     const line = "==========================";
-    const title = "🌹 *CERTIFICAT D'AMOUR OFFICIEL* 🌹";
+    const title = "🌹 *RAPPORT D'AMOUR DÉTAILLÉ* 🌹";
     
-    const quizSection = `*📊 BILAN DU QUIZ :*%0A${formattedAnswers}`;
+    const quizSection = `*📊 ANALYSE DU QUIZ :*%0A${formattedAnswers}`;
     
-    const recapSection = `*❤️ SCORE D'AMOUR :* 100% (Incalculable !)%0A` +
-                        `*🎁 CADEAU VALIDÉ :* ${chosenGift}`;
+    const recapSection = `*❤️ TAUX D'AMOUR :* 100% (Bloqué au max)%0A` +
+                        `*🎁 CADEAU CHOISI :* ${chosenGift}`;
     
     const wishSection = `*💌 SOUHAIT SPÉCIAL :*%0A"${finalWish}"`;
     
-    const footer = `_Signé avec tendresse par ton Amour_ ✨`;
+    const footer = `_Signé avec tout mon cœur_ ✨`;
 
-    // Assemblage final avec beaucoup d'espace pour la lisibilité
     const message = 
       `${title}%0A${line}%0A%0A` +
       `${quizSection}%0A%0A${line}%0A%0A` +
@@ -73,10 +72,10 @@ export const Slider = ({ userAnswers = [] }) => {
         <p className="text-gray-500 font-medium italic text-sm">Prépare ton message pour moi ! ✨</p>
       </div>
       
-      {/* 1. SLIDER */}
+      {/* SLIDER */}
       <div className="bg-white/80 backdrop-blur-md p-8 rounded-[2.5rem] shadow-xl border border-white w-full">
         <label className="block text-[10px] font-black mb-6 text-pink-400 uppercase tracking-[0.2em] text-center">
-          Taux d'amour (Bloqué à 99%)
+           Quel est ton taux d'amour 
         </label>
         
         <div className="relative flex flex-col items-center">
@@ -95,16 +94,15 @@ export const Slider = ({ userAnswers = [] }) => {
         </div>
       </div>
 
-      {/* 2. CADEAUX */}
       {!chosenGift ? (
         <div className="text-center w-full space-y-6">
           <p className="font-bold text-gray-700">Alors, quel cadeau je t'offre ?</p>
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-center relative min-h-[120px]">
             <button 
-              onClick={() => setChosenGift("Un gros bisou 💋")}
+              onClick={() => setChosenGift("De gros bisous 💋")}
               className="bg-white border-2 border-rose-200 hover:border-rose-500 px-8 py-4 rounded-2xl shadow-lg font-black text-rose-600 transition-all hover:scale-105 active:scale-95"
             >
-              Un gros bisou 💋
+              De gros bisous 💋
             </button>
             <button 
               onMouseEnter={escapeButton}
@@ -116,7 +114,6 @@ export const Slider = ({ userAnswers = [] }) => {
           </div>
         </div>
       ) : (
-        /* 3. FORMULAIRE */
         <div className="bg-white p-8 rounded-[3rem] shadow-2xl animate-bounceIn w-full border border-rose-100">
           <div className="relative z-10 space-y-6">
             <h3 className="font-black text-gray-800 text-center text-xl">
@@ -128,7 +125,7 @@ export const Slider = ({ userAnswers = [] }) => {
               <textarea
                 value={wish}
                 onChange={(e) => { setWish(e.target.value); setError(""); }}
-                placeholder="Quelque chose à me demander ? (Un resto, un voyage...)"
+                placeholder="Pour de vrai tu veux quoiiiiiiiii ....."
                 className={`w-full p-5 border-2 rounded-3xl outline-none h-32 resize-none transition-all font-medium
                   ${error ? 'border-red-200 bg-red-50' : 'border-rose-50 bg-rose-50/20 focus:border-rose-300'}`}
               />
