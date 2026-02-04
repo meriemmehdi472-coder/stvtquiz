@@ -90,14 +90,14 @@ export const Quiz = ({ onWin, onLose }) => {
     <div className="relative bg-white/90 backdrop-blur-lg p-8 rounded-[2.5rem] shadow-2xl text-center max-w-md w-full mx-4 border border-white/50 animate-fadeIn">
       
       {/* Badge de progression flottant */}
-      <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-pink-500 to-purple-600 text-white text-xs font-black py-2 px-6 rounded-full shadow-lg uppercase tracking-tighter">
+      <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-linear-to-r from-pink-500 to-purple-600 text-white text-xs font-black py-2 px-6 rounded-full shadow-lg uppercase tracking-tighter">
         Question {currentQuestion + 1} sur {QUESTIONS.length}
       </div>
 
       {/* Barre de progression stylisée */}
       <div className="mt-4 w-full bg-pink-100/50 h-2.5 rounded-full mb-10 overflow-hidden p-0.5 border border-pink-50">
         <div 
-          className="bg-gradient-to-r from-pink-400 via-pink-500 to-purple-500 h-full rounded-full transition-all duration-700 ease-in-out shadow-[0_0_10px_rgba(236,72,153,0.4)]"
+          className="bg-linear-to-r from-pink-400 via-pink-500 to-purple-500 h-full rounded-full transition-all duration-700 ease-in-out shadow-[0_0_10px_rgba(236,72,153,0.4)]"
           style={{ width: `${progress}%` }}
         />
       </div>

@@ -23,7 +23,7 @@ export const Wishlist = ({ onComplete }) => {
   return (
     <div className="mt-8 p-8 bg-white/80 backdrop-blur-md rounded-3xl shadow-xl border border-pink-100 max-w-md mx-auto transform transition-all hover:scale-[1.01]">
       <div className="text-center mb-6">
-        <h3 className="text-2xl font-black bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
+        <h3 className="text-2xl font-black bg-linear-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">
           Le Coffre aux Souhaits 🌸
         </h3>
         <p className="text-gray-500 text-sm mt-2 font-medium">
@@ -52,7 +52,7 @@ export const Wishlist = ({ onComplete }) => {
 
         <button 
           type="submit" 
-          className="group relative bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500 text-white font-black py-4 rounded-2xl shadow-[0_10px_20px_-10px_rgba(236,72,153,0.5)] hover:shadow-[0_20px_30px_-10px_rgba(236,72,153,0.6)] hover:-translate-y-1 active:scale-95 transition-all duration-300 overflow-hidden"
+          className="group relative bg-linear-to-br from-pink-500 via-purple-500 to-indigo-500 text-white font-black py-4 rounded-2xl shadow-[0_10px_20px_-10px_rgba(236,72,153,0.5)] hover:shadow-[0_20px_30px_-10px_rgba(236,72,153,0.6)] hover:-translate-y-1 active:scale-95 transition-all duration-300 overflow-hidden"
         >
           <span className="relative z-10 flex items-center justify-center gap-2 uppercase tracking-widest text-sm">
             Valider mon vœu précieux ✨

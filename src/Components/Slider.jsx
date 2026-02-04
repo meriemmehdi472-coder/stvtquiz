@@ -45,7 +45,7 @@ export const Slider = () => {
       
       {/* HEADER SECTION */}
       <div className="text-center space-y-2">
-        <h2 className="text-3xl font-black bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent uppercase tracking-tight">
+        <h2 className="text-3xl font-black bg-linear-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent uppercase tracking-tight">
           Dernière étape...
         </h2>
         <p className="text-gray-500 font-medium italic text-sm">On y est presque ! ✨</p>
@@ -147,10 +147,10 @@ export const Slider = () => {
                 
                 <button 
                   type="submit"
-                  className="group relative w-full bg-gradient-to-br from-pink-500 to-purple-600 text-white font-black py-5 rounded-2xl shadow-[0_10px_20px_-5px_rgba(236,72,153,0.4)] hover:shadow-[0_15px_25px_-5px_rgba(236,72,153,0.5)] transition-all hover:-translate-y-1 active:scale-[0.98] overflow-hidden"
+                  className="group relative w-full bg-linear-to-br from-pink-500 to-purple-600 text-white font-black py-5 rounded-2xl shadow-[0_10px_20px_-5px_rgba(236,72,153,0.4)] hover:shadow-[0_15px_25px_-5px_rgba(236,72,153,0.5)] transition-all hover:-translate-y-1 active:scale-[0.98] overflow-hidden"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2 uppercase tracking-widest text-sm">
-                    Envoyer à mon amoureux 💌
+                    Envoyer à mon amour 💌
                   </span>
                   <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                 </button>
