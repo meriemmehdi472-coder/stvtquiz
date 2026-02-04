@@ -1,5 +1,19 @@
 import { useState, useMemo } from 'react';
 
+import CryptoJS from "crypto-js";
+
+// Même clé que dans App.jsx
+const SECRET_KEY = "mon-secret-ultra-love-💖";
+
+function decryptData(cipherText) {
+  try {
+    const bytes = CryptoJS.AES.decrypt(cipherText, SECRET_KEY);
+    return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+  } catch (err) {
+    console.error("Erreur décryptage", err);
+    return [];
+  }
+}
 export const Slider = ({ userAnswers = [] }) => {
   const [loveLevel, setLoveLevel] = useState(50);
   const [btnPos, setBtnPos] = useState({ x: 0, y: 0 });
