@@ -160,18 +160,7 @@ export const Slider = ({ userAnswers = [] }) => {
           </div>
         </div>
       )}
-      <div className="mt-8 flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity duration-500">
-        <div className="flex items-center gap-2 text-rose-500">
-          <span className="animate-pulse">✨</span>
-          <p className="text-[10px] font-bold uppercase tracking-[0.3em]">
-            Fait avec tout mon amour
-          </p>
-          <span className="animate-pulse">✨</span>
-        </div>
-        <p className="text-[9px] text-gray-700 font-medium italic">
-          Rien que pour mon Lapinouuu 🌹
-        </p>
-      </div>
+      
     </div>
   ); 
 };

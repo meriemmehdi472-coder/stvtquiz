@@ -13,6 +13,20 @@ function decryptData(cipherText) {
   const bytes = CryptoJS.AES.decrypt(cipherText, SECRET_KEY);
   return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 }
+const FooterAmour = () => (
+  <div className="fixed bottom-6 left-0 right-0 flex flex-col items-center gap-1 opacity-40 hover:opacity-100 transition-opacity duration-500 z-50">
+    <div className="flex items-center gap-2 text-rose-500">
+      <span className="animate-pulse text-xs">✨</span>
+      <p className="text-[10px] font-black uppercase tracking-[0.3em] drop-shadow-sm">
+        Fait avec tout mon amour
+      </p>
+      <span className="animate-pulse text-xs">✨</span>
+    </div>
+    <p className="text-[9px] text-gray-500 font-bold italic">
+      Rien que pour mon Lapinouuu 🌹
+    </p>
+  </div>
+);
 
 // 1. Cœurs sur toute la largeur (Modifié : répartition dynamique)
 const HeartsBackground = () => (
@@ -132,8 +146,9 @@ function App() {
             </div>
           </div>
         )}
+        
       </div>
-      
+      <FooterAmour />
     </main>
   )
 }
