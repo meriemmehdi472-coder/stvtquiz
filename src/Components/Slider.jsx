@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
-export const Slider = () => {
+export const Slider = ({ userAnswers = [] }) => {
   const [loveLevel, setLoveLevel] = useState(50);
   const [btnPos, setBtnPos] = useState({ x: 0, y: 0 });
   const [chosenGift, setChosenGift] = useState(null);
@@ -8,8 +8,17 @@ export const Slider = () => {
   const [error, setError] = useState("");
 
   const myPhoneNumber = "33783746423"; 
+  const forbiddenWords = ["rien", "pas besoin", "tu me suffit", "pas nécessaire", "suffit"];
 
-  const forbiddenWords = ["rien", "pas besoin", "tu me suffit", "pas nécessaire"];
+  // 1. MISE EN FORME DES RÉPONSES (USEMEMO)
+  const formattedAnswers = useMemo(() => {
+    if (!userAnswers || userAnswers.length === 0) return "_Aucune donnée enregistrée_";
+    
+    // On ajoute une puce et on met les réponses en italique pour le style
+    return userAnswers
+      .map((ans, index) => `• Q${index + 1} : _${ans}_`)
+      .join('%0A'); 
+  }, [userAnswers]);
 
   const escapeButton = () => {
     const x = Math.random() * 200 - 100;
@@ -17,11 +26,27 @@ export const Slider = () => {
     setBtnPos({ x, y });
   };
 
+  // 2. LOGIQUE D'ENVOI WHATSAPP AVEC MISE EN PAGE PROPRE
   const handleSendWhatsApp = (finalWish) => {
-    const message = `Coucou ! J'ai fini ton quiz ! 🏆%0A%0A` +
-                    `🎁 Cadeau choisi : ${chosenGift}%0A` +
-                    `✨ Mon souhait : ${finalWish}%0A` +
-                    `❤️ Mon taux d'amour : 99% (le max possible !)`;
+    const separator = "------------------------------------------";
+    const title = `*💖 RAPPORT DE SAINT-VALENTIN 💖*`;
+    
+    const quizSection = `*📊 RÉPONSES AU QUIZ :*%0A${formattedAnswers}`;
+    
+    const recapSection = `*❤️ TAUX D'AMOUR :* 100% (Bloqué au max !)%0A` +
+                        `*🎁 CADEAU CHOISI :* ${chosenGift}`;
+    
+    const wishSection = `*✨ SOUHAIT SPÉCIAL :*%0A"${finalWish}"`;
+    
+    const footer = `_Envoyé avec tout mon amour via ton site web_ ❤️`;
+
+    // Construction du message avec double saut de ligne (%0A%0A) pour aérer
+    const message = 
+      `${title}%0A${separator}%0A%0A` +
+      `${quizSection}%0A%0A` +
+      `${recapSection}%0A%0A` +
+      `${wishSection}%0A%0A` +
+      `${separator}%0A${footer}`;
 
     window.open(`https://wa.me/${myPhoneNumber}?text=${message}`, '_blank');
   };
@@ -45,10 +70,10 @@ export const Slider = () => {
       
       {/* HEADER SECTION */}
       <div className="text-center space-y-2">
-        <h2 className="text-3xl font-black bg-linear-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent uppercase tracking-tight">
+        <h2 className="text-3xl font-black bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent uppercase tracking-tight">
           Dernière étape...
         </h2>
-        <p className="text-gray-500 font-medium italic text-sm">On y est presque ! ✨</p>
+        <p className="text-gray-500 font-medium italic text-sm">Le rapport final est presque prêt ! ✨</p>
       </div>
       
       {/* 1. LE SLIDER STYLISÉ */}
@@ -111,9 +136,8 @@ export const Slider = () => {
           </div>
         </div>
       ) : (
-        /* 3. LA WISHLIST FINALE */
+        /* 3. FORMULAIRE FINAL */
         <div className="bg-white p-8 rounded-[2.5rem] border border-pink-100 w-full shadow-2xl animate-bounceIn relative overflow-hidden">
-          {/* Décoration en arrière-plan */}
           <div className="absolute -right-4 -top-4 text-6xl opacity-10 rotate-12">🎁</div>
           
           <div className="relative z-10 space-y-6">
@@ -126,10 +150,6 @@ export const Slider = () => {
             </div>
 
             <div className="space-y-4">
-              <p className="text-xs text-gray-500 font-bold uppercase text-center tracking-tight">
-                Une dernière chose à ajouter ?
-              </p>
-              
               <form onSubmit={validateWish} className="flex flex-col gap-4">
                 <textarea
                   value={wish}
@@ -147,10 +167,10 @@ export const Slider = () => {
                 
                 <button 
                   type="submit"
-                  className="group relative w-full bg-linear-to-br from-pink-500 to-purple-600 text-white font-black py-5 rounded-2xl shadow-[0_10px_20px_-5px_rgba(236,72,153,0.4)] hover:shadow-[0_15px_25px_-5px_rgba(236,72,153,0.5)] transition-all hover:-translate-y-1 active:scale-[0.98] overflow-hidden"
+                  className="group relative w-full bg-gradient-to-br from-pink-500 to-purple-600 text-white font-black py-5 rounded-2xl shadow-lg hover:-translate-y-1 active:scale-[0.98] transition-all overflow-hidden"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2 uppercase tracking-widest text-sm">
-                    Envoyer à mon amour 💌
+                    Envoyer mon rapport 💌
                   </span>
                   <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                 </button>
@@ -160,7 +180,6 @@ export const Slider = () => {
         </div>
       )}
       
-      {/* FOOTER TEXT */}
       <p className="text-[10px] font-black text-gray-300 uppercase tracking-[0.2em]">
         Fait avec tout mon amour ❤️
       </p>
