@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Quiz } from './Components/Quiz'
 import { Slider } from './Components/Slider'
 
-// 1. Cœurs sur toute la largeur (Modifié : répartition dynamique)
 const HeartsBackground = () => (
   <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
     {[...Array(30)].map((_, i) => (
@@ -25,7 +24,6 @@ const HeartsBackground = () => (
 
 function App() {
   const [step, setStep] = useState('start')
-  // MODIFICATION : Ajout du state pour les réponses
   const [quizAnswers, setQuizAnswers] = useState([]) 
 
   const restart = () => {
@@ -40,7 +38,6 @@ function App() {
 
       <div className="relative z-10 w-full flex justify-center">
         
-        {/* ÉTAPE 1 : ACCUEIL */}
         {step === 'start' && (
           <div className="text-center animate-fadeIn max-w-sm w-full bg-white/60 backdrop-blur-2xl p-12 rounded-[4rem] shadow-[0_20px_50px_rgba(236,72,153,0.3)] border border-white/80">
             <div className="relative mb-8 inline-block">
@@ -71,7 +68,6 @@ function App() {
           </div>
         )}
 
-        {/* ÉTAPE 2 : LE "NON" FORCÉ */}
         {step === 'force' && (
           <div className="text-center animate-bounceIn max-w-md bg-white/90 backdrop-blur-md p-10 rounded-[3rem] shadow-2xl border-4 border-red-100">
             <span className="text-7xl mb-6 block animate-bounce">🤨</span>
@@ -87,12 +83,11 @@ function App() {
           </div>
         )}
 
-        {/* ÉTAPE 3 : LE QUIZ */}
         {step === 'quiz' && (
           <div className="w-full flex justify-center animate-fadeIn">
             <Quiz 
-              // MODIFICATION : On récupère les réponses ici
               onWin={(answers) => {
+                console.log("Réponses reçues dans App:", answers); // Debug pour toi
                 setQuizAnswers(answers); 
                 setStep('final');
               }} 
@@ -101,7 +96,6 @@ function App() {
           </div>
         )}
 
-        {/* ÉTAPE 4 : FINAL */}
         {step === 'final' && (
           <div className="text-center animate-fadeIn w-full max-w-lg">
             <div className="mb-8">
@@ -114,7 +108,6 @@ function App() {
             </div>
             
             <div className="bg-white/30 backdrop-blur-md p-6 rounded-[3.5rem] shadow-inner">
-              {/* MODIFICATION : On transmet les réponses au Slider */}
               <Slider userAnswers={quizAnswers} />
             </div>
           </div>
