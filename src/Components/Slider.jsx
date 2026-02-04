@@ -134,7 +134,7 @@ export const Slider = () => {
                 <textarea
                   value={wish}
                   onChange={(e) => { setWish(e.target.value); setError(""); }}
-                  placeholder="Un resto, un voyage, un massage..."
+                  placeholder="Écris ici ton souhait Stp..."
                   className={`w-full p-4 border-2 rounded-2xl outline-none h-28 resize-none bg-pink-50/30 transition-all font-medium
                     ${error ? 'border-red-200 focus:border-red-400' : 'border-pink-50 focus:border-pink-300'}`}
                 />
